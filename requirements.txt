@@ -5,3 +5,4 @@ streamlit-embedcode
 matplotlib
 descartes
 graphviz
+up42-py

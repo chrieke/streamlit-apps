@@ -47,7 +47,8 @@ st.sidebar.markdown(project)
 #### WORKFLOW ####
 st.header("Workflow")
 workflow_name = "30-seconds-workflow"
-input_tasks = ['sobloo-s2-l1c-aoiclipped', 'sharpening']
+input_tasks = ["Sentinel-2 Level 2 (GeoTIFF)",
+               "Land Surface Temperature Estimation"]
 
 select_workflow = st.selectbox(
     'Select a workflow:',
@@ -121,18 +122,17 @@ with col1_params:
 with col1_params:
     cloud_cover = st.slider('Select Cloud Cover 0-100:', 0, 100, 50)
 
-with col1_params:
-    sharpening_strength = st.radio(
-     "Sharpening strength:",
-     ('light', 'medium', 'strong'), index=1)
+# with col1_params:
+#     sharpening_strength = st.radio(
+#      "Sharpening strength:",
+#      ('light', 'medium', 'strong'), index=1)
 
 input_parameters = workflow.construct_parameters(geometry=aoi,
                                                  geometry_operation="bbox",
-                                                 start_date="2019-01-01",
-                                                 end_date="2020-01-01",
-                                                 limit=limit)
-input_parameters["sobloo-s2-l1c-aoiclipped:1"].update({"max_cloud_cover":cloud_cover})
-input_parameters["sharpening:1"].update({"strength":sharpening_strength})
+                                                 start_date="2018-01-01",
+                                                 end_date="2020-12-31",
+                                                 limit=1)
+input_parameters["sentinelhub-s2-aoiclipped:1"].update({"max_cloud_cover":5})
 #expander = st.beta_expander("Show Input Parameters")
 #expander.write(input_parameters)
 
@@ -174,9 +174,9 @@ if button_realjob:
             job.download_results()
 
         st.set_option('deprecation.showPyplotGlobalUse', False)
-        st.pyplot(job.plot_results(figsize=(3,3)))
+        st.pyplot(job.plot_results(figsize=(6,6), bands=[1], cmap="YlOrBr"))
 
-        m = job.map_results()
+        m = job.map_results(bands=[1])
         folium_static(m)
 
 st.text("")

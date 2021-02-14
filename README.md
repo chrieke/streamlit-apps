@@ -1,1 +1,1 @@
-# streamlit-apps
+# streamlit-apps [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/chrieke/streamlit-apps/main/app-up42.py)
